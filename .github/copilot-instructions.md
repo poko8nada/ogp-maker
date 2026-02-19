@@ -27,7 +27,7 @@ Quietly evaluate which skills to combine to solve each challenge, for every requ
 
 ### Skill Categories
 
-Skills are categorized into `core skills` and `composite skills`.
+Skills are categorized into `Core Skills` and `Composite Skills`.
 
 - Core Skills: Can be used independently. Can also be combined with other skills.
 - Composite Skills: Predefined combinations of core skills for specific contexts.

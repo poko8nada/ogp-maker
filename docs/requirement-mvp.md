@@ -27,12 +27,12 @@
 | OGP レンダリング          | satori, yoga-wasm-web                  |
 | SVGからPNG 変換           | svg2png-wasm                           |
 | ストレージ (slug 検証)    | Cloudflare R2 binding                  |
-| 画像アセット管理          | `assets/ogp/*` (ローカル同梱画像)      |
 | キャッシュ                | Cache API + Cloudflare CDN             |
 | リンター/フォーマッター   | Biome                                  |
 | パッケージマネージャー    | pnpm                                   |
 | テスト                    | Vitest                                 |
 | デプロイ / 型生成         | Wrangler                               |
+| 画像アセット管理          | `assets/ogp/*` (ローカル同梱画像)      |
 
 スクリプト:
 

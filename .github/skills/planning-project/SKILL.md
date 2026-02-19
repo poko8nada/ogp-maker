@@ -3,22 +3,32 @@ name: planning-project
 description: Composite Skill. This skill is used for project planning. Users request that a project plan be created, particularly during the initial stages.
 ---
 
-# planning-project
+# Planning Project Instructions
 
 ## Related Skills
 
-- preparation-planning-doc
+You can use the following skills to help you with project planning.
+
+- planning-doc-creation
 - context7-mcp
 - coding-standard
 - app-testing
 
+Also, consider other skills that might be useful.
+
+- frontend-design
+- \*-architecture, etc.
+
 ## Task order
 
 1. Search draft in root.
-   - If not found, you should lead user to decide the project, by asking questions about the project, such as "What is the project about?", "What is the goal of the project?", "Who is the target audience?", etc.
-   - If found, you should ask user to confirm the draft, and then you can use the information in the draft to plan the project.
-2. Use skill `preparation-planning-doc` to create a project plan document.
-   - While createing document, you should use skill `context7-mcp` to get the latest information about framework, library, and tools related to the project. Because you and the user have the limit knowledge.
-   - Also, `coding-standard` skill and `app-testing` skill are useful for planning the project, so you should use them when needed.
+   - If not found, ask the user questions about the project. And discuss with the user to decide the project’s scope, goals, and requirements.
+     - “What is the project about?”
+     - “What is the project's purpose?”
+     - “Who is the target audience?”
+   - If found, ask the user to review the draft and plan the project based on the draft's information.
+2. Use skill `planning-doc-creation` to create a project plan document.
+   - While createing document, you should use skill `context7-mcp` to get the latest information about framework, library, and tools related to the project. Because both you and the user may possess outdated knowledge as a hallucination.
+   - Also `coding-standards` and `app-testing` skills are useful for understanding the project's fundamental rules, so utilize them as needed.
 3. After creating the project plan document, you should ask user to confirm the document.
 4. Finally, you should summarize the project plan and give it to the user.

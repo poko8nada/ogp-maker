@@ -1,5 +1,5 @@
 ---
-name: creation-planning-doc
+name: planning-doc-creation
 description: Core Skill. This skill is for document creation. User ask you to create planning documents, such as requirement and task breakdown.
 ---
 
@@ -12,8 +12,6 @@ follow this sequence:
 1. **MVP** (Minimum Viable Product) - Core functionality only
 2. **Product or Prod v1** - Essential features
 3. **Product or Prod v2+** - Enhancements and optimizations
-
-Never skip MVP phase. Build incrementally, validate early.
 
 ## Documentation Structure
 
@@ -43,21 +41,22 @@ Regarding template items:
 
 ### Basic Technology Stack
 
-- **Language**: TypeScript (preferred) or JavaScript
+- **Language**: TypeScript
 - **Testing**: Vitest
 - **Package Manager**: pnpm
 
 ### Requirement Gathering and MVP Definition
 
-- Use `/docs/template/requirement-mvp.template.md`
-- Define requirements while discussing user stories and acceptance criteria
-- Identify what's needed for the MVP, keeping v1 or v2 in mind
-- **Get approval** before proceeding
+- Use `/docs/template/requirement-*.template.md`
+- Define requirements while discussing user stories and acceptance criteria.
+- Functions, Components, Tests, Types, and APIs should be explicitly defined in the requirement document.
+- Keep in mind what each version should achieve starting from MVP to v1, v2, etc.
+- However no need to force a division. Depending on functionality and implementation costs, it's acceptable to define everything as part of the MVP or v1.
 
 ### Task Breakdown
 
-- Use `/docs/template/tasks-mvp.template.md`
+- Use `/docs/template/tasks-*.template.md`
+- Tasks should be appropriately divided based on implementation order, not functional order.
+- The order of implementation should be given the highest priority.
 - Break features into **<5 file changes per task**
-- Order tasks by dependency
-- Flag risky items (DB schema, dependencies, CI/CD)
-- **Get approval** before starting
+- Flag risky items (DB schema, dependencies, CI/CD, etc.)

@@ -60,7 +60,7 @@
 
 ## 機能要件 (Functional Requirements)
 
-**This is example, Write each item in full without omitting anything.**
+**This is an example, Write each item in full without omitting anything.**
 
 ### FR-01: 記事一覧のタグ絞り込み
 
@@ -294,5 +294,4 @@ _セマンティックカラー_
 ## 備考・参考資料 (Notes & References)
 
 - [参考URL](https://example.com)
-- [デザインモックアップ]
 - [その他補足情報]
