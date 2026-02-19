@@ -17,11 +17,10 @@
 
 ## 技術スタック (Technology Stack)
 
-**Keep only the necessary items**
-
 ### MVP
 
 ライブラリ・パッケージ:
+**Keep only the necessary items**
 
 | 項目                    | ライブラリ・フレームワーク・パッケージ            |
 | ----------------------- | ------------------------------------------------- |
@@ -39,6 +38,7 @@
 | [その他 XXX]            | [使用するものを明記]                              |
 
 スクリプト:
+**Keep only the necessary items**
 
 - `dev`: [開発サーバー起動コマンド]
 - `build`: [ビルドコマンド]
@@ -60,7 +60,7 @@
 
 ## 機能要件 (Functional Requirements)
 
-**This is example**
+**This is example, Write each item in full without omitting anything.**
 
 ### FR-01: 記事一覧のタグ絞り込み
 

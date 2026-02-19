@@ -9,7 +9,7 @@ description: Core Skill. Planning phase guidelines including requirement gatheri
 
 ### Incremental Development
 
-Always follow this sequence:
+follow this sequence:
 
 1. **MVP** (Minimum Viable Product) - Core functionality only
 2. **Product or Prod v1** - Essential features
@@ -24,7 +24,7 @@ Read and use templates in `docs/template/`:
 ```
 docs/
 ├── template/
-│   ├── requirement.template.md
+│   ├── requirement-mvp.template.md
 │   └── tasks-mvp.template.md
 ├── requirement-mvp.md
 ├── requirement-v1.md (or requirement-prod1.md)
