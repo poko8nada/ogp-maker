@@ -1,0 +1,16 @@
+{
+	"name": "ogp-maker",
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy --minify",
+		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
+	},
+	"dependencies": {
+		"hono": "4.11.9"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.2",
+		"wrangler": "^4.4.0"
+	}
+}
