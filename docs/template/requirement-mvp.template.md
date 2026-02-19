@@ -134,6 +134,7 @@
 ## ディレクトリ構成と作成ファイル (Directory Structure & Files)
 
 **This is an example structure. Adjust according to your project needs.**
+**Basic rule is "Collocation strategy"**
 
 ```
 app/
@@ -292,6 +293,6 @@ _セマンティックカラー_
 
 ## 備考・参考資料 (Notes & References)
 
-- [参考URL]
+- [参考URL](https://example.com)
 - [デザインモックアップ]
 - [その他補足情報]

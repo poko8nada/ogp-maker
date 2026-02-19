@@ -2,7 +2,7 @@
 
 ## 構成
 
-ブログ本体（HonoX）とは別に、OGP画像生成専用のCloudflare Workerを立てる。
+ブログ本体（HonoX）とは別に、本件はOGP画像生成専用のCloudflare Workerを作成、デプロイする。ブログはすでに作成済み。
 本件はMVPのみで、全要件を完成させる
 
 ```
@@ -195,6 +195,8 @@ CloudflareダッシュボードのSecurity → WAFでレートリミットを設
 ---
 
 ## ローカル開発
+
+### まずはOGP Workerをローカルで動かして、ブラウザで直接URLを叩いて画像が返ることを確認する。HonoXブログ側はOGP WorkerのURLを指すようにしておく。
 
 ### 2つのWorkerを同時に起動
 
