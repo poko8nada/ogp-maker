@@ -171,21 +171,21 @@ src/
 ├── index.ts
 ├── assets/
 │   └── ogp-icon.png
+├── utils/
+│   └── types.ts
 └── ogp/
     ├── render.ts
     ├── render.test.ts
     ├── template.tsx
     ├── validate.ts
     ├── validate.test.ts
-    ├── post-exists.ts
     ├── cache.ts
     ├── font.ts
     └── error.ts
-src/utils/
-└── types.ts
+tsconfig.json
+wrangler.jsonc
+worker-configuration.d.ts
 ```
-
-- `worker-configuration.d.ts` は `wrangler types` により生成・更新する
 
 ---
 

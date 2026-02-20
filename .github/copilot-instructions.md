@@ -34,8 +34,8 @@ Skills are categorized into `Core Skills` and `Composite Skills`.
 
 ## Documentation
 
-- `docs/requirement-*.md` for requirements, specifications, and constraints
-- `docs/task-*.md` for task breakdowns and progress
+- `docs/requirements-*.md` for requirements, specifications, and constraints
+- `docs/tasks-*.md` for task breakdowns and progress
 
 ## Basic Tools
 

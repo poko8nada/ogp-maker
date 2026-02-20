@@ -20,11 +20,11 @@ Read and use templates in `/docs/template/`:
 ```
 docs/
 ├── template/
-│   ├── requirement-mvp.template.md
+│   ├── requirements-mvp.template.md
 │   └── tasks-mvp.template.md
-├── requirement-mvp.md
-├── requirement-v1.md (or requirement-prod1.md)
-├── requirement-v2.md (or requirement-prod2.md)
+├── requirements-mvp.md
+├── requirements-v1.md (or requirements-prod1.md)
+├── requirements-v2.md (or requirements-prod2.md)
 ├── tasks-mvp.md
 ├── tasks-v1.md (or tasks-prod1.md)
 └── tasks-v2.md (or tasks-prod2.md)
@@ -47,7 +47,7 @@ Regarding template items:
 
 ### Requirement Gathering and MVP Definition
 
-- Use `/docs/template/requirement-*.template.md`
+- Use `/docs/template/requirements-*.template.md`
 - Define requirements while discussing user stories and acceptance criteria.
 - Functions, Components, Tests, Types, and APIs should be explicitly defined in the requirement document.
 - Keep in mind what each version should achieve starting from MVP to v1, v2, etc.
