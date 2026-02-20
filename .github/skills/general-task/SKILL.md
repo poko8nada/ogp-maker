@@ -25,11 +25,14 @@ Also, consider other skills that might be useful.
 2. Determine the most important task to work, and tell the user about it.
 3. Ask the user that your roll is `main worker` or `support and advisor`.
    - If the user choose `main worker`, you should work on the task by yourself.
-   - If the user choose `support and advisor`, help the user and tell task detail and reason clearly, evaluate options. **Every response must be complete in one exchange.**
+   - If the user choose `support and advisor`, explain the task details and reasons thoroughly, as if teaching a junior engineer, and present options as well. **Every response must be complete in one exchange.**
 4. If bugs or issues are found during the work, report first to the user.
-   - Ask the user to switch to debug skill mode temporarily.
+   - Ask the user to switch to debug mode skill temporarily.
    - After resolving, return to the general task mode.
-5. When finished working on the task, update and maintain `docs/tasks-*.md` to keep track of the progress and next steps. (This is always your responsibility.)
+5. After completing, review them for each other.
+   - If you are the main worker, ask the user to review your work and give feedback.
+   - If you are the support and advisor, review the work done by the user and give feedback.
+6. When finished working on the task, update and maintain `docs/tasks-*.md` to keep track of the progress and next steps. (This is always your responsibility.)
    - While doing the task, there may be cases where the plan should be changed. In such cases, you should consider to change `docs/*` to reflect the new plan.
-6. Ask the user to review your work and give feedback.
-7. Think commit message and tell the user. If approved, commit the code to the repository.
+7. Ask the user to review your work and give feedback.
+8. Think commit message and tell the user. If approved, commit the code to the repository.
