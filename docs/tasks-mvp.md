@@ -6,145 +6,131 @@
   - [ ] `satori` インストール
   - [ ] `yoga-wasm-web` インストール
   - [ ] `svg2png-wasm` インストール
-  - [ ] `vitest` インストール
-  - [ ] `typescript` インストール（typecheck 用）
+  - [ ] `vitest` インストール（devDependencies）
 - `package.json` へのスクリプト追加
-  - [ ] `test` スクリプト追加 (`vitest run`)
-  - [ ] `lint` スクリプト追加 (`biome check .`)
-  - [ ] `format` スクリプト追加 (`biome format --write .`)
-  - [ ] `typecheck` スクリプト追加 (`tsc --noEmit`)
-- `wrangler.jsonc` 設定
-  - [ ] `r2_buckets` に `BUCKET` バインディングを追加
-  - [ ] ローカル再現方式を決め、必要なら `remote: true` を設定
-- seed 方針準備
-  - [ ] `wrangler r2 object put` ベースの seed 手順を README 下書き
-  - [ ] 開発環境の動作確認 `pnpm run dev` でエラーが出ないことを確認
+  - [ ] `test`: `vitest run`
+  - [ ] `lint`: `biome check .`
+  - [ ] `format`: `biome format --write .`
+  - [ ] `typecheck`: `tsc --noEmit`
+- Workers設定
+  - [ ] `wrangler.jsonc` にR2バインド (`BUCKET`) を追加
+- [ ] `pnpm run dev` で起動できることを確認
 
-**完了条件**: 依存導入後に `dev` と `cf-typegen` が動作し、R2 バインディングと seed 方針が確定していること
+**完了条件**: 依存パッケージと基本スクリプトが揃い、Workerがローカル起動できる
 
-## リクエスト検証ロジック実装
+---
 
-### FR-01: OGP API の入力検証
+## リクエスト検証とslug確認の実装
 
-- `src/ogp/validateRequest.ts`
-  - [ ] `validateOgpQuery` 実装（slug/title 必須、title 長さ上限）
-- `src/ogp/validateRequest.test.ts`
-  - [ ] 正常系: 妥当な slug/title を受理
-  - [ ] 異常系: 未入力・不正文字・長すぎる title を拒否
+### FR-02: 入力検証とslug存在確認
+
+- `src/ogp/validate.ts`
+  - [ ] `validateQuery`:
+        `slug` 必須、`title` 文字数制限、許可文字チェックを実装
+- `src/ogp/post-exists.ts`
+  - [ ] `assertPostExists`:
+        R2 `head(posts/{slug}.md)` で存在確認
+- `src/ogp/validate.test.ts`
+  - [ ] 正常系:
+        有効な`slug/title`を受理
+  - [ ] 異常系:
+        空slug、不正slug、過長titleを拒否
 - `src/index.ts`
-  - [ ] `/ogp` ルートで検証関数を呼び、400 応答に接続
+  - [ ] `/ogp` ルートで検証ロジックを呼び出し、400/404を返す
 
-**完了条件**: バリデーション正常/異常の最小テストが通り、異常入力が 400 で返ること
+**完了条件**: 入力不正と記事未存在を明示的に拒否できる
 
-## slug 検証 (R2) 実装
+---
 
-### FR-02: R2 による存在確認
+## OGPレンダリング基盤の実装
 
-- `src/ogp/checkSlug.ts`
-  - [ ] `checkSlugExists(bucket, slug)` 実装
-- `src/ogp/checkSlug.test.ts`
-  - [ ] `R2Bucket.head` のモックで存在/非存在を検証
-- `src/index.ts`
-  - [ ] 検証成功後に slug 存在確認し、非存在時 404 を返却
-- `wrangler.jsonc`
-  - [ ] `r2_buckets` バインディングを実設定する（コメントでなく実値）
+### FR-01: OGP画像生成API
 
-**完了条件**: 非存在 slug は必ず 404 になり、既存 slug のみ生成フローへ進むこと
+- `src/assets/ogp-icon.png`
+  - [ ] ブログアイコン素材:
+        OGP用PNGをプロジェクト配下へ配置
+- `src/ogp/template.tsx`
+  - [ ] `OgpTemplate`:
+        1200x630前提のテンプレートJSXを実装し、PNGを直接importして配置
+- `src/ogp/font.ts`
+  - [ ] `getFontData`:
+        Google FontsからNoto Sans JPを取得し、Cache APIに保存
+- `src/ogp/render.ts`
+  - [ ] `renderOgpPng`:
+        SatoriでSVG生成後、`svg2png-wasm`でPNG化
+- `src/ogp/render.test.ts`
+  - [ ] 正常系:
+        入力からPNGバイト列を返せる（アイコン合成含む）
+  - [ ] 異常系:
+        フォント取得失敗時にエラーを返す
 
-## OGP 画像生成コア実装
+**完了条件**: 有効入力でPNG生成が成功する
 
-### FR-03: Satori + svg2png-wasm
+---
 
-- `src/ogp/getFont.ts`
-  - [ ] Noto Sans JP 取得ロジック実装（Cache API 対応前提）
-- `src/ogp/renderOgp.ts`
-  - [ ] JSX → SVG (`satori`) 実装
-  - [ ] SVG → PNG (`svg2png-wasm`) 実装
-- `assets/ogp/background.png`
-  - [ ] ユーザー提供画像を配置し、読み込みパスを確定
-- `src/ogp/renderOgp.test.ts`
-  - [ ] レンダリング関数の正常系・失敗系を検証
-- `src/index.ts`
-  - [ ] `/ogp` ルートに描画処理を接続して `image/png` 返却
+## キャッシュとレスポンス制御の実装
 
-**完了条件**: `/ogp?slug=...&title=...` で、背景画像合成済みの PNG 応答を返せること
-
-## キャッシュとレスポンス最適化
-
-### FR-04: Cache API + CDN
+### FR-03 / FR-04: 多層キャッシュ・エラーハンドリング
 
 - `src/ogp/cache.ts`
-  - [ ] `findCachedImage` 実装
-  - [ ] `storeCachedImage` 実装（`ctx.waitUntil`）
+  - [ ] `getCachedImage`:
+        生成済み画像のCache API参照
+  - [ ] `putCachedImage`:
+        生成後レスポンスを非同期キャッシュ保存
+- `src/ogp/error.ts`
+  - [ ] `toErrorResponse`:
+        400/404/500レスポンスを統一生成
 - `src/index.ts`
-  - [ ] キャッシュヒット時の即時返却を実装
-  - [ ] `Cache-Control` 等のヘッダ付与
-- `docs/requirement-mvp.md`
-  - [ ] キャッシュ仕様との差分があれば更新
+  - [ ] キャッシュヒット時は即時返却
+  - [ ] キャッシュミス時は生成し、長期キャッシュヘッダーを設定して返却
+- `src/ogp/cache.test.ts`
+  - [ ] 正常系:
+        キャッシュヒットで再生成しない
+  - [ ] 異常系:
+        キャッシュ操作失敗時でも500を返す
 
-**完了条件**: 同一パラメータの再アクセスでキャッシュ応答が返ること
+**完了条件**: キャッシュ有無の両ケースで期待通りのレスポンスになる
 
-## セキュリティガードと運用設定
+---
 
-### FR-05: 公開運用の最低限防御
+## 検証・最適化・デプロイ準備
 
-- `src/index.ts`
-  - [ ] 補助的な UA/Referer ガードミドルウェアを追加
-  - [ ] エラーレスポンスを 4xx/5xx で明確化
+### 検証
+
+- テスト実行
+  - [ ] `pnpm run test` がパス
+- 型・品質チェック
+  - [ ] `pnpm run typecheck` がパス
+  - [ ] `pnpm run lint` がパス
+- 手動確認
+  - [ ] `GET /ogp?slug=...&title=...` でPNGが返る
+  - [ ] 返却画像にブログアイコンが含まれる
+  - [ ] 同URL再リクエスト時にキャッシュヒットする
+
+### デプロイ準備
+
+- `README.md`
+  - [ ] アイコンアセット配置・R2バインド・デプロイ手順を更新
 - `wrangler.jsonc`
-  - [ ] 本番 URL・変数・バインディングの最終整理
-- `README.md`
-  - [ ] ローカル検証 URL と本番想定 URL を追記
+  - [ ] 本番向け設定（カスタムドメイン前提）を最終確認
 
-**完了条件**: 不正アクセスを最低限抑制し、ローカル/本番の運用手順が README に明示されること
-
-## ローカル seed 導線の実装
-
-### FR-06: ローカル R2 seed
-
-- `README.md`
-  - [ ] `wrangler r2 object put` を使った seed 手順を記載
-  - [ ] seed 後の動作確認 URL を記載
-- `scripts/seed-r2.ts`
-  - [ ] 任意で seed 自動化スクリプトを実装
-- `package.json`
-  - [ ] 任意で `seed:r2` スクリプトを追加
-
-**完了条件**: 新規環境でも seed 手順だけで slug 検証フローを再現できること
+**完了条件**: ローカル検証が完了し、デプロイ手順がREADMEに反映されている
 
 ---
 
 ## リスク項目（要監視）
 
-- [ ] **依存リスク**: WASM 依存追加により Worker サイズ制限を超える可能性
-- [ ] **実行制約リスク**: 画像初回生成時の CPU 使用量が高くなる可能性
-- [ ] **運用リスク**: Custom Domain 未設定時に期待したキャッシュ動作にならない可能性
-- [ ] **開発リスク**: seed 未整備でローカル再現ができず検証品質が落ちる可能性
-
-## 検証・最適化・デプロイ (Validation & Deployment)
-
-- ブラウザ互換性テスト（手動確認）
-  - [ ] Chrome latest: `/ogp` 直アクセスで画像表示
-  - [ ] Safari latest: `/ogp` 直アクセスで画像表示
-- テスト実行
-  - [ ] 単体テスト実行 `pnpm run test` がパス
-- 型・品質確認
-  - [ ] `pnpm run typecheck` がパス
-  - [ ] `pnpm run lint` がパス
-- デプロイ確認
-  - [ ] `pnpm run deploy` 実行可能
-
-**完了条件**: テスト・型・lint が通り、デプロイ可能な状態であること
-
----
+- [ ] Workerバンドルサイズ超過: WASM依存が増えるため、`wrangler deploy --dry-run` でサイズ確認を必須化
+- [ ] CPU時間超過: 初回生成コストが高いため、キャッシュヒット率を監視
+- [ ] R2依存の可用性: `head` 失敗時のフォールバックポリシーを事前定義
+- [ ] CDNキャッシュ不発: `workers.dev` では運用せずカスタムドメインを利用
+- [ ] アイコン素材の運用: アセット差し替え手順と命名規約を運用化
 
 ## チェックリスト（デプロイ前確認）
 
-- [ ] `slug + title` 仕様で API が動作
-- [ ] R2 検証、キャッシュ、エラーハンドリングが有効
-- [ ] `wrangler.jsonc` の `r2_buckets` 実設定が完了
-- [ ] `assets/ogp/` 画像が配置され描画に反映
-- [ ] OGP 画像が主要 SNS クローラーで取得可能
-- [ ] 単体テストがパス（`pnpm run test`）
-- [ ] 環境変数・R2 バインディング設定確認
-- [ ] v1 以降への移行メモ更新（`docs/requirement-mvp.md`）
+- [ ] `pnpm run test` がパス
+- [ ] `pnpm run typecheck` がパス
+- [ ] `pnpm run lint` がパス
+- [ ] R2バインド設定が本番環境に反映済み
+- [ ] OGP URLがカスタムドメインになっている
+- [ ] READMEの運用手順を最新化済み
