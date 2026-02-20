@@ -57,6 +57,7 @@ Regarding template items:
 
 - Use `/docs/template/tasks-*.template.md`
 - Tasks should be appropriately divided based on implementation order, not functional order.
-- The order of implementation should be given the highest priority.
-- Break features into **<5 file changes per task**
+- Implementation order should be the top priority.
+- Limit the creation of files to a maximum of 5 per task.
+- Completion criteria for each task must be defined **concretely and explicitly**, such as successful testing, visual verification in the development environment, and api response confirmation, etc.
 - Flag risky items (DB schema, dependencies, CI/CD, etc.)
