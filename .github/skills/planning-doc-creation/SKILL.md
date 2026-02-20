@@ -56,8 +56,30 @@ Regarding template items:
 ### Task Breakdown
 
 - Use `/docs/template/tasks-*.template.md`
-- Tasks should be appropriately divided based on implementation order, not functional order.
-- Implementation order should be the top priority.
 - Limit the creation of files to a maximum of 5 per task.
-- Completion criteria for each task must be defined **concretely and explicitly**, such as successful testing, visual verification in the development environment, and api response confirmation, etc.
 - Flag risky items (DB schema, dependencies, CI/CD, etc.)
+
+#### Vertical Slice Principle
+
+Tasks must follow a **vertical slice** approach: each task produces something that actually runs and can be verified in the development environment. Do NOT stack up files and functions task by task and only verify at the end.
+
+Structure tasks like this:
+
+1. **Skeleton first** — The first task always builds the thinnest possible working slice. For example, an endpoint that returns a hardcoded response. Verify it runs with `pnpm run dev` before moving on.
+2. **Flesh it out** — Subsequent tasks add real behavior on top of the working skeleton (validation, business logic, external integrations, etc.), one layer at a time.
+3. **Stabilize** — Later tasks add caching, error handling, and edge case coverage once the happy path is solid.
+
+#### Completion Criteria Rules
+
+Completion criteria for each task must be **concrete and verifiable**, combining both of the following:
+
+- **Runtime verification**: what you can actually confirm in `pnpm run dev`
+  - e.g. `GET /ogp?slug=hello` returns `200` with `Content-Type: image/png`, the response image visually contains the blog icon
+  - e.g. access to `/` and see the expected UI rendered, or a function returns the expected output when called
+- **Automated verification**: which tests pass (e.g. `validate.test.ts` normal/error cases all pass)
+
+Criteria like "implementation complete" or "tests pass" alone are **not acceptable**. Every task must include at least one runtime check.
+
+#### Tests Are Written In The Same Task
+
+Tests for a feature must be written in the same task as the feature itself, not deferred to a later task. If a task adds a function, its unit tests are part of that task's completion criteria.

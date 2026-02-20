@@ -19,7 +19,7 @@
   - [x] `pnpm run cf-typegen` で `worker-configuration.d.ts` を生成
 - [x] `pnpm run dev` で起動できることを確認
 
-**完了条件**: `pnpm install` 後に `pnpm run dev` がエラーなく起動し、`package.json` の `test/lint/format/typecheck` スクリプトが実行可能である
+**完了条件**: 実行時検証として `pnpm run dev` がエラーなく起動し、自動検証として `pnpm run typecheck` と `pnpm run lint` が成功すること
 
 ---
 
@@ -40,7 +40,7 @@
   - [x] `ensureResvgWasm`:
         `initWasm()` を一度だけ実行するガードを実装
 
-**完了条件**: `pnpm run dev` 起動後に `GET /ogp?slug=...&title=...` が `200` かつ `Content-Type: image/png` を返す
+**完了条件**: 実行時検証として `GET /ogp?slug=...&title=...` が `200` かつ `Content-Type: image/png` を返し、自動検証として `pnpm run typecheck` が成功すること
 
 ---
 
@@ -65,7 +65,7 @@
 - `src/index.ts`
   - [x] `/ogp` ルートで検証ロジックを呼び出し、400/404を返す
 
-**完了条件**: `/ogp` で不正入力時に `400`、記事未存在時に `404` を返し、`validate.test.ts` の正常/異常ケースがすべてパスする
+**完了条件**: 実行時検証として `/ogp` で不正入力時に `400`、記事未存在時に `404` を返し、自動検証として `validate.test.ts` の正常/異常ケースがすべてパスすること
 
 ---
 
@@ -91,7 +91,7 @@
   - [ ] 異常系:
         フォント取得失敗時にエラーを返す
 
-**完了条件**: `render.test.ts` の正常/異常ケースがパスし、有効な `slug/title` で `/ogp` が `200` + `Content-Type: image/png` を返す
+**完了条件**: 実行時検証として有効な `slug/title` で `/ogp` が `200` + `Content-Type: image/png` を返し、自動検証として `render.test.ts` の正常/異常ケースがパスすること
 
 ---
 
@@ -116,7 +116,7 @@
   - [ ] 異常系:
         キャッシュ操作失敗時でも500を返す
 
-**完了条件**: キャッシュヒット時に再生成せず即時返却し、キャッシュミス時は生成後に保存され、エラー時は `400/404/500` のいずれかで明示応答される
+**完了条件**: 実行時検証として同一URL再リクエスト時にキャッシュヒットし、失敗時に `400/404/500` のいずれかで明示応答され、自動検証として `cache.test.ts` の正常/異常ケースがパスすること
 
 ---
 
@@ -139,9 +139,9 @@
 - `README.md`
   - [ ] アイコンアセット配置・R2バインド・デプロイ手順を更新
 - `wrangler.jsonc`
-  - [x] 本番向け設定（カスタムドメイン前提）を最終確認
+  - [ ] 本番向け設定（カスタムドメイン前提）を最終確認
 
-**完了条件**: `pnpm run test` / `pnpm run typecheck` / `pnpm run lint` がすべて成功し、READMEに運用・デプロイ手順が反映されている
+**完了条件**: 実行時検証として `/ogp` の手動確認（PNG返却・アイコン表示・キャッシュヒット）が完了し、自動検証として `pnpm run test` / `pnpm run typecheck` / `pnpm run lint` がすべて成功すること
 
 ---
 

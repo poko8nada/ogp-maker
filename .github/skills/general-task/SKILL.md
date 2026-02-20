@@ -22,13 +22,12 @@ Also, consider other skills that might be useful.
 ## Task order
 
 1. Read `docs/requirements-*.md` and `docs/tasks-*.md` to understand the requirements and tasks.
-2. Determine the most important task to work, and tell the user about it.
+2. Identify the most recent uncompleted task according to `docs/tasks-*.md`. And tell the user about the overview.
 3. Ask the user that your roll is `main worker` or `support and advisor`.
    - If the user choose `main worker`, you should work on the task by yourself.
    - If the user choose `support and advisor`, tell the task details and reasons thoroughly, as if teaching a junior engineer.
-     - **Every response must be complete in one exchange.**
      - Details and reasons are important, so that you must explain them without omitting any minor points.
-     - Functions, logic, components, types, etc., should each provide concrete code examples at a certain level of granularity.
+     - Functions, logic, components, types, etc., should each **provide concrete code examples** at a certain level of granularity.
 4. If bugs or issues are found during the work, report first to the user.
    - Ask the user to switch to debug mode skill temporarily.
    - After resolving, return to the general task mode.
