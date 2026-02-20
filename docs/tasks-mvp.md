@@ -3,18 +3,18 @@
 ## 依存関係のセットアップ
 
 - 必要なパッケージのインストール
-  - [ ] `satori` インストール
-  - [ ] `yoga-wasm-web` インストール
-  - [ ] `svg2png-wasm` インストール
-  - [ ] `vitest` インストール（devDependencies）
+  - [x] `satori` インストール
+  - [x] `yoga-wasm-web` インストール
+  - [x] `svg2png-wasm` インストール
+  - [x] `vitest` インストール（devDependencies）
 - `package.json` へのスクリプト追加
-  - [ ] `test`: `vitest run`
-  - [ ] `lint`: `biome check .`
-  - [ ] `format`: `biome format --write .`
-  - [ ] `typecheck`: `tsc --noEmit`
+  - [x] `test`: `vitest run`
+  - [x] `lint`: `biome check .`
+  - [x] `format`: `biome format --write .`
+  - [x] `typecheck`: `tsc --noEmit`
 - Workers設定
-  - [ ] `wrangler.jsonc` にR2バインド (`BUCKET`) を追加
-- [ ] `pnpm run dev` で起動できることを確認
+  - [x] `wrangler.jsonc` にR2バインド (`BUCKET`) を追加
+- [x] `pnpm run dev` で起動できることを確認
 
 **完了条件**: 依存パッケージと基本スクリプトが揃い、Workerがローカル起動できる
 
@@ -47,7 +47,7 @@
 ### FR-01: OGP画像生成API
 
 - `src/assets/ogp-icon.png`
-  - [ ] ブログアイコン素材:
+  - [x] ブログアイコン素材:
         OGP用PNGをプロジェクト配下へ配置
 - `src/ogp/template.tsx`
   - [ ] `OgpTemplate`:

@@ -1,16 +1,25 @@
 {
-	"name": "ogp-maker",
-	"type": "module",
-	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "wrangler deploy --minify",
-		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
-	},
-	"dependencies": {
-		"hono": "4.11.9"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.4.2",
-		"wrangler": "^4.4.0"
-	}
+  "name": "ogp-maker",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "test": "vitest run",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "4.11.9",
+    "satori": "^0.19.2",
+    "svg2png-wasm": "^1.4.1",
+    "yoga-wasm-web": "^0.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18",
+    "wrangler": "^4.4.0"
+  }
 }

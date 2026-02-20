@@ -2,7 +2,13 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ogp-maker",
   "main": "src/index.ts",
-  "compatibility_date": "2026-02-19"
+  "compatibility_date": "2026-02-19",
+  "r2_buckets": [
+    {
+      "binding": "POSTS_BUCKET",
+      "bucket_name": "portfolio-bucket"
+    }
+  ],
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
