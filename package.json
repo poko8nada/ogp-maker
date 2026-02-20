@@ -11,9 +11,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2",
     "hono": "4.11.9",
     "satori": "^0.19.2",
-    "svg2png-wasm": "^1.4.1",
     "yoga-wasm-web": "^0.3.3"
   },
   "devDependencies": {

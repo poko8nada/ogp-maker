@@ -8,15 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@resvg/resvg-wasm':
+        specifier: ^2.6.2
+        version: 2.6.2
       hono:
         specifier: 4.11.9
         version: 4.11.9
       satori:
         specifier: ^0.19.2
         version: 0.19.2
-      svg2png-wasm:
-        specifier: ^1.4.1
-        version: 1.4.1
       yoga-wasm-web:
         specifier: ^0.3.3
         version: 0.3.3
@@ -474,6 +474,10 @@ packages:
   '@poppinss/exception@1.2.3':
     resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
 
+  '@resvg/resvg-wasm@2.6.2':
+    resolution: {integrity: sha512-FqALmHI8D4o6lk/LRWDnhw95z5eO+eAa6ORjVg09YRR7BkcM6oPHU9uyC0gtQG5vpFLvgpeU4+zEAz2H8APHNw==}
+    engines: {node: '>= 10'}
+
   '@rollup/rollup-android-arm-eabi@4.57.1':
     resolution: {integrity: sha512-A6ehUVSiSaaliTxai040ZpZ2zTevHYbvu/lDoeAteHI8QnaosIzm4qwtezfRg1jOYaUmnzLX1AOD6Z+UJjtifg==}
     cpu: [arm]
@@ -847,10 +851,6 @@ packages:
   supports-color@10.2.2:
     resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
     engines: {node: '>=18'}
-
-  svg2png-wasm@1.4.1:
-    resolution: {integrity: sha512-ZFy1NtwZVAsslaTQoI+/QqX2sg0vjmgJ/jGAuLZZvYcRlndI54hLPiwLC9JzXlFBerfxN5JiS7kpEUG0mrXS3Q==}
-    deprecated: svg2png-wasm is no longer supported. Please use the resvg-js package instead.
 
   tiny-inflate@1.0.3:
     resolution: {integrity: sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==}
@@ -1273,6 +1273,8 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
+  '@resvg/resvg-wasm@2.6.2': {}
+
   '@rollup/rollup-android-arm-eabi@4.57.1':
     optional: true
 
@@ -1632,8 +1634,6 @@ snapshots:
   string.prototype.codepointat@0.2.1: {}
 
   supports-color@10.2.2: {}
-
-  svg2png-wasm@1.4.1: {}
 
   tiny-inflate@1.0.3: {}
 
