@@ -26,7 +26,7 @@
 | Webフレームワーク       | Hono (`hono`)                          |
 | SVG生成                 | Satori (`satori`)                      |
 | レイアウトエンジン      | `yoga-wasm-web`                        |
-| SVG→PNG変換             | `svg2png-wasm`                         |
+| SVGからPNG変換          | `@resvg/resvg-wasm`                    |
 | ストレージ（slug検証）  | Cloudflare R2 Binding                  |
 | リンター/フォーマッター | Biome                                  |
 | パッケージマネージャー  | pnpm                                   |
@@ -37,10 +37,10 @@
 - `dev`: `wrangler dev`
 - `deploy`: `wrangler deploy --minify`
 - `cf-typegen`: `wrangler types --env-interface CloudflareBindings`
-- `test`: `vitest run`（追加予定）
-- `lint`: `biome check .`（追加予定）
-- `format`: `biome format --write .`（追加予定）
-- `typecheck`: `tsc --noEmit`（追加予定）
+- `test`: `vitest run`
+- `lint`: `biome check .`
+- `format`: `biome format --write .`
+- `typecheck`: `tsc --noEmit`
 
 ### PRODUCT v1以降
 
@@ -56,8 +56,11 @@
 - 要件: `GET /ogp` でPNG画像を返す
 - 詳細:
   - `slug` を必須パラメータとして受け取り、`title` は任意で受け取る
-  - SatoriでSVGを生成後、`svg2png-wasm` でPNGへ変換する
+  - SatoriでSVGを生成後、`@resvg/resvg-wasm` でPNGへ変換する
+  - `@resvg/resvg-wasm` の `initWasm()` を初回1回のみ実行する
   - `src/assets/ogp-icon.png` を `src/ogp/template.tsx` から直接importし、画像テンプレート内へ配置する
+  - `wrangler.jsonc` の `rules` で `**/*.png` を `Data` モジュールとして扱う
+  - `*.png` / `@resvg/resvg-wasm/index_bg.wasm` の型宣言を `.d.ts` で定義する
   - 返却ヘッダーは `Content-Type: image/png` を必須とする
 - 作成予定のファイル・関数・コンポーネント・型など:
   - `src/index.ts`
@@ -65,15 +68,20 @@
     - `handleOgpRequest(c): Promise<Response>`
   - `src/ogp/render.ts`
     - `renderOgpPng(input: RenderOgpInput): Promise<Uint8Array>`
-    - `type RenderOgpInput = { title: string; slug: string }`
+    - `ensureResvgWasm(): Promise<void>`
+    - `type RenderOgpInput = { title: string }`
   - `src/ogp/template.tsx`
     - `OgpTemplate({ title }): JSX.Element`
     - `type OgpTemplateProps = { title: string }`
+  - `src/assets.d.ts`
+    - `declare module '*.png'`
+  - `src/wasm.d.ts`
+    - `declare module '@resvg/resvg-wasm/index_bg.wasm'`
   - `src/assets/ogp-icon.png`
     - OGP画像に載せるブログアイコン素材
 - テスト: 単体テスト
 - テスト観点(正常と異常):
-  - 正常: 必須パラメータが揃っているとPNGが返る
+  - 正常: 必須パラメータが揃っていると `200` と `Content-Type: image/png` でPNGが返る
   - 異常: パラメータ不備時に400を返す
   - 異常: アイコンアセット欠損時は生成失敗として扱う
 
@@ -96,8 +104,8 @@
     - `ok(value)` / `err(error)`
 - テスト: 単体テスト
 - テスト観点(正常と異常):
-  - 正常: 仕様内入力を受理する
-  - 異常: 不正slug・過長title・記事未存在を拒否する
+  - 正常: 仕様内入力を受理し、記事存在時はレンダリング処理に進む
+  - 異常: 不正slug・過長titleで `400`、記事未存在で `404` を返す
 
 ### FR-03: 多層キャッシュ
 
@@ -156,11 +164,11 @@
 
 ### NFR-05: ライセンスコンプライアンス
 
-| リソース     | 用途            | ライセンス                | クレジット表記           |
-| ------------ | --------------- | ------------------------- | ------------------------ |
-| Noto Sans JP | OGP画像フォント | SIL Open Font License 1.1 | 必要に応じてREADMEへ追記 |
-| satori       | SVG生成         | MPL-2.0                   | 不要（LICENSE同梱）      |
-| svg2png-wasm | PNG変換         | MIT（要確認）             | 不要（LICENSE同梱）      |
+| リソース          | 用途            | ライセンス                | クレジット表記           |
+| ----------------- | --------------- | ------------------------- | ------------------------ |
+| Noto Sans JP      | OGP画像フォント | SIL Open Font License 1.1 | 必要に応じてREADMEへ追記 |
+| satori            | SVG生成         | MPL-2.0                   | 不要（LICENSE同梱）      |
+| @resvg/resvg-wasm | PNG変換         | MPL-2.0                   | 不要（LICENSE同梱）      |
 
 ---
 
@@ -169,8 +177,10 @@
 ```
 src/
 ├── index.ts
+├── assets.d.ts
 ├── assets/
 │   └── ogp-icon.png
+├── wasm.d.ts
 ├── utils/
 │   └── types.ts
 └── ogp/

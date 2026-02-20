@@ -5,7 +5,7 @@
 - 必要なパッケージのインストール
   - [x] `satori` インストール
   - [x] `yoga-wasm-web` インストール
-  - [x] `svg2png-wasm` インストール
+  - [x] `@resvg/resvg-wasm` インストール
   - [x] `vitest` インストール（devDependencies）
 - `package.json` へのスクリプト追加
   - [x] `test`: `vitest run`
@@ -14,11 +14,33 @@
   - [x] `typecheck`: `tsc --noEmit`
 - Workers設定
   - [x] `wrangler.jsonc` にR2バインド (`BUCKET`) を追加
+  - [x] `wrangler.jsonc` に `rules` (`**/*.png` を `Data`) を追加
 - 型定義生成
   - [x] `pnpm run cf-typegen` で `worker-configuration.d.ts` を生成
 - [x] `pnpm run dev` で起動できることを確認
 
-**完了条件**: 依存パッケージと基本スクリプトが揃い、Workerがローカル起動できる
+**完了条件**: `pnpm install` 後に `pnpm run dev` がエラーなく起動し、`package.json` の `test/lint/format/typecheck` スクリプトが実行可能である
+
+---
+
+## レンダリングランタイム設定の実装
+
+### FR-01: Workerでのアセット / WASM 読み込み設定
+
+- `wrangler.jsonc`
+  - [x] `rules`:
+        `**/*.png` を `Data` モジュールとして読み込む設定を追加
+- `src/assets.d.ts`
+  - [x] `declare module '*.png'`:
+        PNG import を `ArrayBuffer` として型定義
+- `src/wasm.d.ts`
+  - [x] `declare module '@resvg/resvg-wasm/index_bg.wasm'`:
+        Resvg Wasm import 型を `WebAssembly.Module` で定義
+- `src/ogp/render.ts`
+  - [x] `ensureResvgWasm`:
+        `initWasm()` を一度だけ実行するガードを実装
+
+**完了条件**: `pnpm run dev` 起動後に `GET /ogp?slug=...&title=...` が `200` かつ `Content-Type: image/png` を返す
 
 ---
 
@@ -43,7 +65,7 @@
 - `src/index.ts`
   - [x] `/ogp` ルートで検証ロジックを呼び出し、400/404を返す
 
-**完了条件**: 入力不正と記事未存在を明示的に拒否できる
+**完了条件**: `/ogp` で不正入力時に `400`、記事未存在時に `404` を返し、`validate.test.ts` の正常/異常ケースがすべてパスする
 
 ---
 
@@ -55,21 +77,21 @@
   - [x] ブログアイコン素材:
         OGP用PNGをプロジェクト配下へ配置
 - `src/ogp/template.tsx`
-  - [ ] `OgpTemplate`:
+  - [x] `OgpTemplate`:
         1200x630前提のテンプレートJSXを実装し、PNGを直接importして配置
 - `src/ogp/font.ts`
-  - [ ] `getFontData`:
+  - [x] `getFontData`:
         Google FontsからNoto Sans JPを取得し、Cache APIに保存
 - `src/ogp/render.ts`
-  - [ ] `renderOgpPng`:
-        SatoriでSVG生成後、`svg2png-wasm`でPNG化
+  - [x] `renderOgpPng`:
+        SatoriでSVG生成後、`@resvg/resvg-wasm`でPNG化
 - `src/ogp/render.test.ts`
   - [ ] 正常系:
         入力からPNGバイト列を返せる（アイコン合成含む）
   - [ ] 異常系:
         フォント取得失敗時にエラーを返す
 
-**完了条件**: 有効入力でPNG生成が成功する
+**完了条件**: `render.test.ts` の正常/異常ケースがパスし、有効な `slug/title` で `/ogp` が `200` + `Content-Type: image/png` を返す
 
 ---
 
@@ -94,13 +116,13 @@
   - [ ] 異常系:
         キャッシュ操作失敗時でも500を返す
 
-**完了条件**: キャッシュ有無の両ケースで期待通りのレスポンスになる
+**完了条件**: キャッシュヒット時に再生成せず即時返却し、キャッシュミス時は生成後に保存され、エラー時は `400/404/500` のいずれかで明示応答される
 
 ---
 
 ## 検証・最適化・デプロイ準備
 
-### 検証
+### 最終検証
 
 - テスト実行
   - [ ] `pnpm run test` がパス
@@ -117,9 +139,9 @@
 - `README.md`
   - [ ] アイコンアセット配置・R2バインド・デプロイ手順を更新
 - `wrangler.jsonc`
-  - [ ] 本番向け設定（カスタムドメイン前提）を最終確認
+  - [x] 本番向け設定（カスタムドメイン前提）を最終確認
 
-**完了条件**: ローカル検証が完了し、デプロイ手順がREADMEに反映されている
+**完了条件**: `pnpm run test` / `pnpm run typecheck` / `pnpm run lint` がすべて成功し、READMEに運用・デプロイ手順が反映されている
 
 ---
 
