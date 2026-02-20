@@ -89,7 +89,7 @@
     - `validateQuery(query: URLSearchParams): ValidationResult`
     - `type ValidationResult = { ok: true; value: ValidQuery } | { ok: false; status: 400; message: string }`
     - `type ValidQuery = { slug: string; title: string }`
-  - `src/ogp/post-exists.ts`
+  - `src/ogp/validate.ts`
     - `assertPostExists(bucket: R2Bucket, slug: string): Promise<boolean>`
   - `src/utils/types.ts`
     - `type Result<T, E> = Ok<T> | Err<E>`

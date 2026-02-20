@@ -27,21 +27,21 @@
 ### FR-02: 入力検証とslug存在確認
 
 - `src/ogp/validate.ts`
-  - [ ] `validateQuery`:
+  - [x] `validateQuery`:
         `slug` 必須、`title` 文字数制限、許可文字チェックを実装
-- `src/ogp/post-exists.ts`
-  - [ ] `assertPostExists`:
+- `src/ogp/validate.ts`
+  - [x] `assertPostExists`:
         R2 `head(posts/{slug}.md)` で存在確認
 - `src/utils/types.ts`
   - [x] `Result` ヘルパー:
         `Ok` / `Err` / `ok` / `err` を導入
 - `src/ogp/validate.test.ts`
-  - [ ] 正常系:
+  - [x] 正常系:
         有効な`slug/title`を受理
-  - [ ] 異常系:
+  - [x] 異常系:
         空slug、不正slug、過長titleを拒否
 - `src/index.ts`
-  - [ ] `/ogp` ルートで検証ロジックを呼び出し、400/404を返す
+  - [x] `/ogp` ルートで検証ロジックを呼び出し、400/404を返す
 
 **完了条件**: 入力不正と記事未存在を明示的に拒否できる
 
