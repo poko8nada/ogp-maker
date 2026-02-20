@@ -14,6 +14,8 @@
   - [x] `typecheck`: `tsc --noEmit`
 - Workers設定
   - [x] `wrangler.jsonc` にR2バインド (`BUCKET`) を追加
+- 型定義生成
+  - [x] `pnpm run cf-typegen` で `worker-configuration.d.ts` を生成
 - [x] `pnpm run dev` で起動できることを確認
 
 **完了条件**: 依存パッケージと基本スクリプトが揃い、Workerがローカル起動できる
@@ -30,6 +32,9 @@
 - `src/ogp/post-exists.ts`
   - [ ] `assertPostExists`:
         R2 `head(posts/{slug}.md)` で存在確認
+- `src/utils/types.ts`
+  - [x] `Result` ヘルパー:
+        `Ok` / `Err` / `ok` / `err` を導入
 - `src/ogp/validate.test.ts`
   - [ ] 正常系:
         有効な`slug/title`を受理

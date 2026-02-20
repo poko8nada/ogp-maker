@@ -63,7 +63,6 @@
   - `src/index.ts`
     - `buildApp(): Hono<{ Bindings: CloudflareBindings }>`
     - `handleOgpRequest(c): Promise<Response>`
-    - `type CloudflareBindings = { BUCKET: R2Bucket }`
   - `src/ogp/render.ts`
     - `renderOgpPng(input: RenderOgpInput): Promise<Uint8Array>`
     - `type RenderOgpInput = { title: string; slug: string }`
@@ -92,6 +91,9 @@
     - `type ValidQuery = { slug: string; title: string }`
   - `src/ogp/post-exists.ts`
     - `assertPostExists(bucket: R2Bucket, slug: string): Promise<boolean>`
+  - `src/utils/types.ts`
+    - `type Result<T, E> = Ok<T> | Err<E>`
+    - `ok(value)` / `err(error)`
 - テスト: 単体テスト
 - テスト観点(正常と異常):
   - 正常: 仕様内入力を受理する
@@ -179,7 +181,11 @@ src/
     ├── cache.ts
     ├── font.ts
     └── error.ts
+src/utils/
+└── types.ts
 ```
+
+- `worker-configuration.d.ts` は `wrangler types` により生成・更新する
 
 ---
 
