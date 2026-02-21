@@ -85,6 +85,12 @@ Start with **Pattern 1**. Refactor to **Pattern 2** when needed for reuse, testi
 - Server Actions/route handlers returning success/error
 - Hooks/Composables managing operations
 
+### Result<T, E> Decision Criteria
+
+- Use `Result<T, E>` when callers need structured failure reasons (`error`) to decide behavior.
+- Do **not** wrap expected absence/presence checks in `Result` (`cache.match`, `Map.get`, optional lookup). Use `T | undefined` / `T | null` / `boolean`.
+- If absence must be promoted to domain error (e.g., API response mapping to 404/400), convert it at the boundary layer (handler/service), not at low-level adapters.
+
 ### Use try-catch for:
 
 - External operations (I/O, DB, fetch, file system)
