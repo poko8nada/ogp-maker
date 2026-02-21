@@ -86,9 +86,9 @@
   - [x] `renderOgpPng`:
         SatoriでSVG生成後、`@resvg/resvg-wasm`でPNG化
 - `src/ogp/render.test.ts`
-  - [ ] 正常系:
+  - [x] 正常系:
         入力からPNGバイト列を返せる（アイコン合成含む）
-  - [ ] 異常系:
+  - [x] 異常系:
         フォント取得失敗時にエラーを返す
 
 **完了条件**: 実行時検証として有効な `slug/title` で `/ogp` が `200` + `Content-Type: image/png` を返し、自動検証として `render.test.ts` の正常/異常ケースがパスすること

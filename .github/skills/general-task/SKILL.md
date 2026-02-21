@@ -26,8 +26,8 @@ Also, consider other skills that might be useful.
 3. Ask the user that your roll is `main worker` or `support and advisor`.
    - If the user choose `main worker`, you should work on the task by yourself.
    - If the user choose `support and advisor`, tell the task details and reasons thoroughly, as if teaching a junior engineer.
-     - Details and reasons are important, so that you must explain them without omitting any minor points.
-     - Functions, logic, components, types, etc., should each **provide concrete code examples** at a certain level of granularity.
+     - Details and reasons are very important. It doesn't matter if it's difficult, troublesome, or time-consuming. You should thoroughly explain everything without omitting even minor points.
+     - Functions, logic, components, types, etc., must each **provide concrete code examples** at a certain level of granularity.
 4. If bugs or issues are found during the work, report first to the user.
    - Ask the user to switch to debug mode skill temporarily.
    - After resolving, return to the general task mode.
