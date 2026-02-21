@@ -8,7 +8,8 @@
     "test": "vitest run",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed:r2": "node seeds/r2.mjs"
   },
   "dependencies": {
     "@resvg/resvg-wasm": "^2.6.2",

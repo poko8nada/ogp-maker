@@ -21,13 +21,20 @@ export function OgpTemplate({ title }: { title: string }) {
         justifyContent: 'center',
         width: '1200px',
         height: '630px',
-        backgroundColor: '#f0f0f0',
-        padding: '64px',
-        gap: '20px',
+        backgroundColor: '#efefef',
+        padding: '50px 48px',
+        boxSizing: 'border-box',
       }}
     >
-      <img src={iconDataUrl} width={60} height={60} />
-      <p style={{ fontSize: '56px', margin: 0 }}>{title}</p>
+    <div style={{ padding: '76px 40px 32px', backgroundColor: '#ffffff', display: 'flex', borderRadius: '24px', boxShadow: '0 18px 30px rgba(0, 0, 0, 0.1)', height: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
+        <p style={{ fontSize: '60px', margin: '0', textAlign: 'center' }}>{title}</p>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', margin: '0'}}>
+            <p style={{fontSize: '46px', margin:'0'}}>PokoHanada</p>
+            <img src={iconDataUrl} width={80} height={80} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

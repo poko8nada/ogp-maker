@@ -2,7 +2,7 @@ import { type Err, type Ok, err, ok } from '../utils/types'
 
 type Query = { slug?: string; title?: string }
 type ValidQuery = { slug: string; title: string }
-type ValidationResult = Ok<ValidQuery> | Err<{ status: 400; message: string }>
+type ValidationResult = Ok<ValidQuery> | Err<{ type: 'bad_request'; status: 400;  message: string }>
 
 export async function assertPostExists(
   bucket: R2Bucket,
@@ -21,6 +21,7 @@ export function validateQuery(query: Query): ValidationResult {
 
   if (slug.length === 0 || !slugRegex.test(slug)) {
     return err({
+      type: 'bad_request',
       status: 400,
       message:
         'Invalid slug. Slug must be lowercase, alphanumeric, and can include hyphens.',
@@ -29,6 +30,7 @@ export function validateQuery(query: Query): ValidationResult {
 
   if (title.length > 100) {
     return err({
+      type: 'bad_request',
       status: 400,
       message:
         'Invalid title. Title must be a non-empty string with a maximum length of 100 characters.',

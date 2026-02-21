@@ -50,7 +50,6 @@ app.get('/ogp', async (c):Promise<Response> => {
       message: 'Failed to render OGP image',
     })
   }
-
 })
 
 export default app
