@@ -4,15 +4,17 @@
   "files": {
     "ignoreUnknown": true,
     "includes": [
-      "app/**",
-      "componets/**",
-      "hooks/**",
-      "utils/**",
-      "routes/**",
       "biome.json",
       "package.json",
       "wrangler.toml",
-      "!**/*.css"
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.mjs",
+      "**/*.mts",
+      "!**/*.css",
+      "!worker-configuration.d.ts"
     ]
   },
   "linter": {

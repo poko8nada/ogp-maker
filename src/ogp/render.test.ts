@@ -80,7 +80,9 @@ describe('renderOgpPng', () => {
   it('throws when font fetch fails', async () => {
     getFontMock.mockResolvedValue(err('font fetch failed'))
 
-    await expect(renderOgpPng({ title: 'valid title' })).rejects.toThrow('font fetch failed')
+    await expect(renderOgpPng({ title: 'valid title' })).rejects.toThrow(
+      'font fetch failed',
+    )
     expect(satoriMock).not.toHaveBeenCalled()
   })
 })

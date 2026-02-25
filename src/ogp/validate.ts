@@ -1,8 +1,10 @@
-import { type Err, type Ok, err, ok } from '../utils/types'
+import { type Err, err, type Ok, ok } from '../utils/types'
 
 type Query = { slug?: string; title?: string }
 type ValidQuery = { slug: string; title: string }
-type ValidationResult = Ok<ValidQuery> | Err<{ type: 'bad_request'; status: 400;  message: string }>
+type ValidationResult =
+  | Ok<ValidQuery>
+  | Err<{ type: 'bad_request'; status: 400; message: string }>
 
 export async function assertPostExists(
   bucket: R2Bucket,

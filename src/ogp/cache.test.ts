@@ -68,7 +68,9 @@ describe('cache flow on /ogp', () => {
     )
 
     expect(response.status).toBe(500)
-    await expect(response.json()).resolves.toEqual({ message: 'Failed to render OGP image' })
+    await expect(response.json()).resolves.toEqual({
+      message: 'Failed to render OGP image',
+    })
     expect(renderOgpPngMock).not.toHaveBeenCalled()
   })
 })

@@ -4,6 +4,7 @@ export type OgpError = {
 }
 
 export function toErrorResponse(error: OgpError): Response {
-  const status = error.type === 'bad_request' ? 400 : error.type === 'not_found' ? 404 : 500
+  const status =
+    error.type === 'bad_request' ? 400 : error.type === 'not_found' ? 404 : 500
   return Response.json({ message: error.message }, { status })
 }

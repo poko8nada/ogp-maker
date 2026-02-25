@@ -1,6 +1,9 @@
-import { err, ok, type Err, type Ok } from '../utils/types'
+import { type Err, err, type Ok, ok } from '../utils/types'
 
-export async function getFont(cache: Cache, fontName: string): Promise<Ok<ArrayBuffer> | Err<string>> {
+export async function getFont(
+  cache: Cache,
+  fontName: string,
+): Promise<Ok<ArrayBuffer> | Err<string>> {
   const fontUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400`
   const cacheKey = new Request(fontUrl)
 
@@ -11,8 +14,8 @@ export async function getFont(cache: Cache, fontName: string): Promise<Ok<ArrayB
 
   const response = await fetch(fontUrl, {
     headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1',
     },
   })
 
@@ -22,7 +25,7 @@ export async function getFont(cache: Cache, fontName: string): Promise<Ok<ArrayB
 
   const css = await response.text()
   const fontFileUrl = css.match(
-    /src: url\(([^)]+)\) format\('(woff2|woff|opentype|truetype)'\)/
+    /src: url\(([^)]+)\) format\('(woff2|woff|opentype|truetype)'\)/,
   )?.[1]
 
   if (!fontFileUrl) return err('Failed to parse font URL from CSS')
@@ -33,7 +36,10 @@ export async function getFont(cache: Cache, fontName: string): Promise<Ok<ArrayB
   }
 
   const fontData = await fontFileResponse.arrayBuffer()
-  await cache.put(cacheKey, new Response(fontData, { headers: { 'Content-Type': 'font/woff2' } }))
+  await cache.put(
+    cacheKey,
+    new Response(fontData, { headers: { 'Content-Type': 'font/woff2' } }),
+  )
 
   return ok(fontData)
 }

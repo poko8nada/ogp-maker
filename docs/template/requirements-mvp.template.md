@@ -69,15 +69,21 @@
   - `tag` クエリを取得し、一覧データへ適用する
   - 選択中タグをUI表示し、解除操作で全件表示へ戻す
 - 作成予定のファイル・関数・コンポーネント・型など:
-  - `app/posts/page.tsx`
-    - `PostsPage({ searchParams }): JSX.Element`
-    - `type PostsPageProps = { searchParams: { tag?: string } }`
-  - `app/posts/_lib/getPosts.ts`
-    - `getPosts(filter: { tag?: string }): Promise<Post[]>`
-    - `type Post = { id: string, title: string, tags: string[] }`
-  - `components/TagSelector.tsx`
-    - `TagSelector({ tags, selectedTag, onSelect }): JSX.Element`
-    - `type TagSelectorProps = { tags: string[], selectedTag?: string, onSelect: (tag?: string) => void }`
+
+  ```tsx
+  // app/posts/page.tsx
+  PostsPage({ searchParams }): JSX.Element
+  type PostsPageProps = { searchParams: { tag?: string } }
+
+  // app/posts/_lib/getPosts.ts
+  getPosts(filter: { tag?: string }): Promise<Post[]>
+  type Post = { id: string, title: string, tags: string[] }
+
+  // components/TagSelector.tsx
+  TagSelector({ tags, selectedTag, onSelect }): JSX.Element
+  type TagSelectorProps = { tags: string[], selectedTag?: string, onSelect: (tag?: string) => void }
+  ```
+
 - テスト: [なし / 単体テスト / 結合テスト / E2Eテスト]
 - テスト観点(正常と異常):
   - タグ選択で該当記事のみ表示されること
@@ -89,10 +95,16 @@
 - 詳細:
   - [機能の詳細な説明や仕様、例など]
 - [関数/コンポーネント/型/スタイル/テスト]:
-  - `[対象ファイルパス]`
-    - `[関数/コンポーネント名]({ props }): JSX.Element`
-    - `type [型名] = { ... }`
-  - [必要に応じて複数ファイル・関数を記載]
+
+```ts
+// 対象ファイルパス.ts
+buraburabura({ props }): Promise<burabura>
+type props = { /* 型定義 */ }
+type burabura = { /* 型定義 */ }
+
+// 必要に応じて複数ファイル・関数を記載
+```
+
 - テスト: [なし / 単体テスト / 結合テスト / E2Eテスト]
 - テスト観点(正常と異常):
   - [機能が正常に動作すること]

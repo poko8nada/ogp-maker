@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "afplay /System/Library/Sounds/Glass.aiff",
+        "timeoutSec": 10
+      }
+    ],
+    "agentStop": [
+      {
+        "type": "command",
+        "bash": "afplay /System/Library/Sounds/Glass.aiff",
+        "timeoutSec": 10
+      }
+    ],
+    "subagentStop": [
+      {
+        "type": "command",
+        "bash": "afplay /System/Library/Sounds/Glass.aiff",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

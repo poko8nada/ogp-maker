@@ -1,18 +1,20 @@
 import { Hono } from 'hono'
+import { getCachedImage, putCachedImage } from './ogp/cache'
+import { toErrorResponse } from './ogp/error'
+import { renderOgpPng } from './ogp/render'
 import { assertPostExists, validateQuery } from './ogp/validate'
 import { isErr } from './utils/types'
-import { renderOgpPng } from './ogp/render'
-import { toErrorResponse } from './ogp/error'
-import { getCachedImage, putCachedImage } from './ogp/cache'
 
 const app = new Hono<{ Bindings: CloudflareBindings }>()
 
-
-app.get('/ogp', async (c):Promise<Response> => {
+app.get('/ogp', async (c): Promise<Response> => {
   const query = c.req.query()
   const result = validateQuery(query)
   if (isErr(result)) {
-    return toErrorResponse({ type: 'bad_request', message: result.error.message })
+    return toErrorResponse({
+      type: 'bad_request',
+      message: result.error.message,
+    })
   }
 
   const isExists = await assertPostExists(c.env.POSTS_BUCKET, result.value.slug)
@@ -32,7 +34,8 @@ app.get('/ogp', async (c):Promise<Response> => {
     }
 
     const pngData = await renderOgpPng({
-      title: result.value.title.length > 0 ? result.value.title : result.value.slug,
+      title:
+        result.value.title.length > 0 ? result.value.title : result.value.slug,
     })
     const response = new Response(pngData, {
       headers: {

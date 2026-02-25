@@ -1,4 +1,4 @@
-import { Resvg, initWasm } from '@resvg/resvg-wasm'
+import { initWasm, Resvg } from '@resvg/resvg-wasm'
 import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm'
 import satori from 'satori'
 import { isErr } from '../utils/types'
@@ -15,7 +15,9 @@ function ensureResvgWasm(): Promise<void> {
   return wasmInitialized
 }
 
-export async function renderOgpPng({ title }: RenderOgpInput): Promise<Uint8Array> {
+export async function renderOgpPng({
+  title,
+}: RenderOgpInput): Promise<Uint8Array> {
   await ensureResvgWasm()
   const fontResult = await getFont(caches.default, 'Noto Sans JP')
 

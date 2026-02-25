@@ -6,6 +6,11 @@
   "compatibility_flags": [
       "nodejs_compat"
     ],
+  "route": {
+    "pattern": "ogp.pokohanada.com/*",
+    "zone_name": "pokohanada.com"
+  },
+  "workers_dev": false,
   "rules": [
     {
       "type": "Data",

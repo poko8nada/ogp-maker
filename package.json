@@ -6,8 +6,8 @@
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "test": "vitest run",
-    "lint": "biome check .",
-    "format": "biome format --write .",
+    "lint": "biome check",
+    "format": "biome format",
     "typecheck": "tsc --noEmit",
     "seed:r2": "node seeds/r2.mjs"
   },
