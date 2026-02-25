@@ -17,8 +17,8 @@ export async function assertPostExists(
 }
 
 export function validateQuery(query: Query): ValidationResult {
-  const slug = query.slug?.trim() ?? ''
-  const title = query.title?.trim() ?? ''
+  const slug = decodeURIComponent(query.slug ?? '')
+  const title = decodeURIComponent(query.title ?? '')
   const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
   if (slug.length === 0 || !slugRegex.test(slug)) {
