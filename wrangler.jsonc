@@ -6,10 +6,7 @@
   "compatibility_flags": [
       "nodejs_compat"
     ],
-  "route": {
-    "pattern": "ogp.pokohanada.com/*",
-    "zone_name": "pokohanada.com"
-  },
+    "routes": [{ "custom_domain": true, "pattern": "image.pokohanada.com" }],
   "workers_dev": false,
   "rules": [
     {
